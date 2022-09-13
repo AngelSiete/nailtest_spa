@@ -1,8 +1,10 @@
 const { Router } = require('express');
-const { employeesGet,employeesPut,employeesPost,employeesDelete} = require ('../controllers/employees')
+const { employeesGet,employeesGetById, employeesPut,employeesPost,employeesDelete} = require ('../controllers/employees')
 const router = Router();
 
 router.get('/', employeesGet);
+
+router.get('/:id', employeesGetById);
 
 router.put('/:id', employeesPut);
 

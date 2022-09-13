@@ -1,29 +1,32 @@
 const express = require('express');
 
+const EMPLOYEES_ENDOPOINT = '/api/employees';
+
 class Server {
 
-    constructor(){
-        this.app = express();
-        this.port = process.env.PORT;
-        this.employeesPath = '/api/employees';
-        this.middlewares();
-        this.routes();
+    constructor(PORT){
+        this._port = PORT;
+        this._app = express();
+        this._setupMiddlewares();
+        this._setUpRoutes();
     }
 
-    middlewares(){
+    _setupMiddlewares(){
         // to read info from the body 
-        this.app.use(express.json())
+        this._app.use(express.json())
         // access public directory with express
-        this.app.use(express.static('public'))
+        this._app.use(express.static('public'))
     }
 
-    routes(){
-       this.app.use( this.employeesPath, require('../routes/employees'))
+    _setUpRoutes(){
+       this._app.use( EMPLOYEES_ENDOPOINT, require('../routes/employees'))
     }
+    
+    // PUBLIC API
 
     listen(){
-        this.app.listen(this.port, () => {
-            console.log('Example app listening on port', this.port)
+        this._app.listen(this._port, () => {
+            console.log('Example app listening on port', this._port)
           })
     }
 }
